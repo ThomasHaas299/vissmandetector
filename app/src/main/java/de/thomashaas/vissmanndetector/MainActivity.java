@@ -16,16 +16,22 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
 
+    static final int EVENT_CNT = 100;
+    static final int EVENT_PART = 10;
+    
     SensorManager sensorManager;
     Sensor sensor;
     EditText edOutput;
     StringBuilder sb = new StringBuilder();
     Button btnStart, btnStop;
-    ArrayList<Float> x = new ArrayList<>(), y = new ArrayList<>(), z = new ArrayList<>();
+    private boolean measuring;
+    ArrayList<Float> lst = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
+        // sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
     }
 
     // Create a listener
@@ -47,17 +54,21 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onSensorChanged(SensorEvent sensorEvent) {
 
-            // String line = String.format(Locale.CANADA, "%.2f %.2f %.2f", sensorEvent.values[0], sensorEvent.values[1], sensorEvent.values[2]);
+            String line = String.format(Locale.CANADA, "%.2f %.2f %.2f", sensorEvent.values[0], sensorEvent.values[1], sensorEvent.values[2]);
+            Log.d("VSMN",line);
 
-            // Log.d("VSMN",
-            //         line
-            // );
+            if (!measuring) {
+                return;
+            }
 
-            Log.d("VSMN", String.valueOf(sensorEvent.values[2]));
 
-            x.add(Math.abs(sensorEvent.values[0]));
-            y.add(Math.abs(sensorEvent.values[1]));
-            z.add(Math.abs(sensorEvent.values[2]));
+            lst.add(Math.abs(sensorEvent.values[2]));
+
+            if (lst.size() >= EVENT_CNT) {
+                mCalc();
+            }
+            
+            // Log.d("VSMN", String.valueOf(sensorEvent.values[2]));
 
         }
 
@@ -66,10 +77,34 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private void mCalc() {
+        log("mCalc");
+        ArrayList<Float> nLst = new ArrayList<>(lst);
+
+        lst.clear();
+        nLst.sort(Collections.reverseOrder());
+        float sum = 0f;
+        for(int i=0; i < EVENT_PART; i++) {
+            sum += nLst.get(i);
+        }
+        float ave = sum / (float) EVENT_PART;
+        // Log.d("VSMN", nLst.get(0) + " " + nLst.get(1));
+        // Log.d("VSMN", String.valueOf(ave));
+
+        runOnUiThread(() -> {
+            edOutput.setText(String.valueOf(ave));
+        });
+
+    }
+
+    private void log(String s) {
+        Log.d("VSMN", s);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-        // mStart();
+        mStart();
     }
 
     @Override
@@ -84,57 +119,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void mStart() {
-        sb.setLength(0);
-        x.clear();
-        y.clear();
-        z.clear();
-        enableButtons(false);
         sensorManager.registerListener(accelerationSensorListener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     private void mStop() {
-
-        enableButtons(true);
         try {
             sensorManager.unregisterListener(accelerationSensorListener);
         } catch (Exception e) {
             // e.printStackTrace();
         }
-
-        Toast.makeText(MainActivity.this, String.valueOf(x.size()), Toast.LENGTH_SHORT).show();
-
-        mCalc();
-
-        edOutput.setText(sb);
     }
 
-    private void mCalc() {
-        x.sort(Collections.reverseOrder());
-        y.sort(Collections.reverseOrder());
-        z.sort(Collections.reverseOrder());
 
-        Log.d("VSMN", z.toString());
-
-        float sx = 0, sy = 0, sz = 0f;
-
-        float len = Math.min(x.size() / 10f, 100f);
-
-        for (int i = 0; i < len; i++) {
-            sx += x.get(i);
-            sy += y.get(i);
-            sz += z.get(i);
-        }
-
-        sb.append(String.format(Locale.CANADA, "%.2f %.2f %.2f", sx / len, sy / len, sz / len));
-
-    }
 
     public void btnStartClick(View v) {
-        mStart();
+        enableButtons(false);
+        lst.clear();
+        measuring = true;
     }
 
     public void btnStopClick(View v) {
-        mStop();
+        enableButtons(true);
+        measuring = false;
     }
 
 }
