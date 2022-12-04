@@ -6,32 +6,84 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btnStop"
+
+    <TextView
+        android:id="@+id/tvOffsetLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="btnStopClick"
-        android:text="btnStop"
+        android:layout_marginTop="16dp"
+        android:text="tvOffsetLabel"
+        app:layout_constraintStart_toStartOf="@+id/tvCurrentValueLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvCurrentValueLabel" />
+
+    <TextView
+        android:id="@+id/tvCurrentValueLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="tvCurrentValueLabel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/edOutput"
-        android:layout_width="match_parent"
-        android:layout_height="542dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        app:layout_constraintTop_toBottomOf="@+id/btnStop" />
-
-    <Button
-        android:id="@+id/btnStart"
+    <TextView
+        android:id="@+id/tvCurrentValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="btnStartClick"
-        android:text="btnStart"
-        app:layout_constraintStart_toEndOf="@+id/btnStop"
-        app:layout_constraintTop_toTopOf="@+id/btnStop" />
+        android:layout_marginStart="16dp"
+        android:text="tvCurrentValue"
+        app:layout_constraintStart_toEndOf="@+id/tvCurrentValueLabel"
+        app:layout_constraintTop_toTopOf="@+id/tvCurrentValueLabel" />
 
+    <EditText
+        android:id="@+id/edOffset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toStartOf="@+id/tvCurrentValue"
+        app:layout_constraintTop_toTopOf="@+id/tvOffsetLabel" />
 
+    <Button
+        android:id="@+id/btnSaveOffset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="btnSaveOffset"
+        app:layout_constraintStart_toStartOf="@+id/edOffset"
+        app:layout_constraintTop_toBottomOf="@+id/edOffset" />
+
+    <TextView
+        android:id="@+id/tvCalcValueLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="tvCalcValueLabel"
+        app:layout_constraintStart_toStartOf="@+id/tvOffsetLabel"
+        app:layout_constraintTop_toBottomOf="@+id/btnSaveOffset" />
+
+    <TextView
+        android:id="@+id/tvCalcValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="tvCalcValue"
+        app:layout_constraintStart_toEndOf="@+id/tvCalcValueLabel"
+        app:layout_constraintTop_toTopOf="@+id/tvCalcValueLabel" />
+
+    <Button
+        android:id="@+id/btnStartTransmission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="btnStartTransmission"
+        app:layout_constraintStart_toStartOf="@+id/tvCalcValueLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvCalcValueLabel" />
+
+    <Button
+        android:id="@+id/btnStopTransmission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="btnStopTransmission"
+        app:layout_constraintStart_toStartOf="@+id/btnStartTransmission"
+        app:layout_constraintTop_toBottomOf="@+id/btnStartTransmission" />
 </androidx.constraintlayout.widget.ConstraintLayout>
