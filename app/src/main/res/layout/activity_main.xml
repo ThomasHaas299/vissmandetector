@@ -8,13 +8,15 @@
 
 
     <TextView
+        android:labelFor="@id/edOffset"
         android:id="@+id/tvOffsetLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="tvOffsetLabel"
         app:layout_constraintStart_toStartOf="@+id/tvCurrentValueLabel"
-        app:layout_constraintTop_toBottomOf="@+id/tvCurrentValueLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCurrentValueLabel"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/tvCurrentValueLabel"
@@ -24,7 +26,8 @@
         android:layout_marginTop="16dp"
         android:text="tvCurrentValueLabel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/tvCurrentValue"
@@ -33,16 +36,18 @@
         android:layout_marginStart="16dp"
         android:text="tvCurrentValue"
         app:layout_constraintStart_toEndOf="@+id/tvCurrentValueLabel"
-        app:layout_constraintTop_toTopOf="@+id/tvCurrentValueLabel" />
+        app:layout_constraintTop_toTopOf="@+id/tvCurrentValueLabel"
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/edOffset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="numberDecimal"
+        android:inputType="numberSigned"
         app:layout_constraintStart_toStartOf="@+id/tvCurrentValue"
-        app:layout_constraintTop_toTopOf="@+id/tvOffsetLabel" />
+        app:layout_constraintTop_toTopOf="@+id/tvOffsetLabel"
+        tools:ignore="Autofill" />
 
     <Button
         android:id="@+id/btnSaveOffset"
@@ -50,7 +55,8 @@
         android:layout_height="wrap_content"
         android:text="btnSaveOffset"
         app:layout_constraintStart_toStartOf="@+id/edOffset"
-        app:layout_constraintTop_toBottomOf="@+id/edOffset" />
+        app:layout_constraintTop_toBottomOf="@+id/edOffset"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/tvCalcValueLabel"
@@ -59,7 +65,8 @@
         android:layout_marginTop="16dp"
         android:text="tvCalcValueLabel"
         app:layout_constraintStart_toStartOf="@+id/tvOffsetLabel"
-        app:layout_constraintTop_toBottomOf="@+id/btnSaveOffset" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSaveOffset"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/tvCalcValue"
@@ -68,7 +75,8 @@
         android:layout_marginStart="16dp"
         android:text="tvCalcValue"
         app:layout_constraintStart_toEndOf="@+id/tvCalcValueLabel"
-        app:layout_constraintTop_toTopOf="@+id/tvCalcValueLabel" />
+        app:layout_constraintTop_toTopOf="@+id/tvCalcValueLabel"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btnStartTransmission"
@@ -77,7 +85,8 @@
         android:layout_marginTop="16dp"
         android:text="btnStartTransmission"
         app:layout_constraintStart_toStartOf="@+id/tvCalcValueLabel"
-        app:layout_constraintTop_toBottomOf="@+id/tvCalcValueLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCalcValueLabel"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btnStopTransmission"
@@ -85,5 +94,6 @@
         android:layout_height="wrap_content"
         android:text="btnStopTransmission"
         app:layout_constraintStart_toStartOf="@+id/btnStartTransmission"
-        app:layout_constraintTop_toBottomOf="@+id/btnStartTransmission" />
+        app:layout_constraintTop_toBottomOf="@+id/btnStartTransmission"
+        tools:ignore="HardcodedText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

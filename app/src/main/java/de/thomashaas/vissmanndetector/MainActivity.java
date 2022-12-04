@@ -97,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
         // sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        mStart();
     }
 
     private void saveOffset() {
@@ -141,14 +143,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        mStart();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
         mStop();
     }
 
@@ -158,11 +154,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void mStart() {
+        log("registerListener");
         sensorManager.registerListener(accelerationSensorListener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     private void mStop() {
         try {
+            log("unregisterListener");
             sensorManager.unregisterListener(accelerationSensorListener);
         } catch (Exception e) {
             // e.printStackTrace();
