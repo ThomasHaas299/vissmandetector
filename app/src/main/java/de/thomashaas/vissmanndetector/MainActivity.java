@@ -18,10 +18,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import de.thomashaas.vissmanndetector.http.HttpPost;
+
 public class MainActivity extends AppCompatActivity {
 
     static final int EVENT_CNT = 100;
     static final int EVENT_PART = 10;
+    static final String URL = "https://vissmanndetector.thomashaas.de/";
+    static final String PASSWD = "TTZhh-f43";
+
     private final ArrayList<Integer> lst = new ArrayList<>();
     private SensorManager sensorManager;
     private Sensor sensor;
@@ -30,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnStartTransmission;
     private Button btnStopTransmission;
     private boolean transmitting;
-    private int offset = 0;
+    private int offset = 47;
     // Create a listener
     private final SensorEventListener accelerationSensorListener = new SensorEventListener() {
         @SuppressWarnings("CommentedOutCode")
@@ -135,6 +140,23 @@ public class MainActivity extends AppCompatActivity {
         int calcValue = Math.abs(ave - offset);
         tvCalcValue.setText(String.valueOf(calcValue));
 
+        if (transmitting) {
+            postValue(calcValue);
+        }
+
+    }
+
+    private void postValue(int value) {
+
+        // Networking, deswegen ein neuer Thread ...
+        new Thread(() -> {
+            HttpPost httpPost = new HttpPost(URL);
+            httpPost.addParam("passwd", PASSWD);
+            httpPost.addParam("value", value);
+
+            int responseCode = httpPost.getResponseCode();
+            log("ResonseCode: " + responseCode);
+        }).start();
     }
 
     @SuppressWarnings("SameParameterValue")
