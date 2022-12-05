@@ -22,8 +22,8 @@ import de.thomashaas.vissmanndetector.http.HttpPost;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final int EVENT_CNT = 100;
-    static final int EVENT_PART = 10;
+    static final int EVENT_CNT = 1000;
+    static final int EVENT_PART = 80;
     static final String URL = "https://vissmanndetector.thomashaas.de/";
     static final String PASSWD = "TTZhh-f43";
 
